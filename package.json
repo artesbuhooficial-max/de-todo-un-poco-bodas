@@ -1,0 +1,11 @@
+{
+  "name": "de-todo-un-poco-bodas",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node --test tests/publish.test.mjs"
+  },
+  "engines": { "node": ">=22" }
+}

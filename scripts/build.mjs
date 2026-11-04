@@ -1,0 +1,15 @@
+import {readFile, writeFile, mkdir, cp} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import {resolve} from 'node:path';
+import {render} from '../lib/content.mjs';
+const root = fileURLToPath(new URL('../', import.meta.url));
+const content = JSON.parse(await readFile(resolve(root,'data/content.json'),'utf8'));
+const template = await readFile(resolve(root,'template.html'),'utf8');
+await mkdir(resolve(root,'dist'),{recursive:true});
+for (const name of ['assets','styles.css','script.js','preview.js','editor']) await cp(resolve(root,name),resolve(root,'dist',name),{recursive:true});
+await writeFile(resolve(root,'dist/index.html'),render(template,content));
+await writeFile(resolve(root,'dist/template.html'),template);
+await writeFile(resolve(root,'dist/content.json'),JSON.stringify(content));
+await cp(resolve(root,'schema.json'),resolve(root,'dist/editor-schema.json'));
+await writeFile(resolve(root,'dist/_headers'),'/editor/*\n  X-Robots-Tag: noindex, nofollow\n  Cache-Control: no-store\n/content.json\n  Cache-Control: no-cache\n/template.html\n  X-Robots-Tag: noindex\n  Cache-Control: no-cache\n/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Content-Security-Policy: frame-ancestors \'self\'\n');
+console.log('Landing y editor generados en dist/.');
