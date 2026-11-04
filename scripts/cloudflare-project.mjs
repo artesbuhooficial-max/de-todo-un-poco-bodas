@@ -13,5 +13,9 @@ let project;
 if(action==='create'){
  const list=await call(endpoint);project=list.find(p=>p.name===name);
  if(!project)project=await call(endpoint,{method:'POST',body:JSON.stringify({name,production_branch:'main',build_config:{build_command:'npm run build',destination_dir:'dist',root_dir:''},source:{type:'github',config:{owner:'artesbuhooficial-max',owner_id:'281841275',repo_name:name,repo_id:'1429649772',production_branch:'main',pr_comments_enabled:true,deployments_enabled:true,production_deployments_enabled:true,preview_deployment_setting:'none'}},deployment_configs:{production:{compatibility_date:'2026-11-04',env_vars:{NODE_VERSION:{type:'plain_text',value:'22'}}},preview:{compatibility_date:'2026-11-04',env_vars:{NODE_VERSION:{type:'plain_text',value:'22'}}}}})});
+}else if(action==='deploy'){
+ const deployment=await call(`${endpoint}/${name}/deployments`,{method:'POST'});
+ console.log(JSON.stringify({deploymentId:deployment.id,url:deployment.url,stage:deployment.latest_stage},null,2));
+ process.exit(0);
 }else project=await call(`${endpoint}/${name}`);
 console.log(JSON.stringify({name:project.name,domains:project.domains,source:project.source,build_config:project.build_config,latest_deployment:project.latest_deployment?{id:project.latest_deployment.id,url:project.latest_deployment.url,stage:project.latest_deployment.latest_stage}:null},null,2));

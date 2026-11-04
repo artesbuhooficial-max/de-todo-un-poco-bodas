@@ -1,8 +1,9 @@
 import {readFile, writeFile, mkdir, cp} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {resolve} from 'node:path';
-import {render} from '../lib/content.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url));
+await writeFile(resolve(root,'lib/schema.mjs'),'export default '+await readFile(resolve(root,'schema.json'),'utf8')+';\n');
+const {render}=await import('../lib/content.mjs');
 const content = JSON.parse(await readFile(resolve(root,'data/content.json'),'utf8'));
 const template = await readFile(resolve(root,'template.html'),'utf8');
 await mkdir(resolve(root,'dist'),{recursive:true});
