@@ -31,7 +31,7 @@ export async function onRequest({request,env}) {
       chunks.push(value);
     }
     const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length;}
-    try { body=JSON.parse(new TextDecoder().decode(bytes)); validate(body.content); }
+    try { body=JSON.parse(new TextDecoder().decode(bytes)); body.content=validate(body.content); }
     catch(error){return reply(400,error instanceof Error?error.message:'Contenido incorrecto.');}
     if(typeof body.baseSha!=='string'||!/^[a-f0-9]{40}$/.test(body.baseSha))return reply(400,'Carga primero la versión publicada.');
   }
@@ -42,7 +42,7 @@ export async function onRequest({request,env}) {
     if(!currentResponse.ok)return reply(502,'No se pudo leer la versión de GitHub.');
     const current=await currentResponse.json();
     if(!current.sha||!current.content)return reply(502,'No se encontró el contenido editable.');
-    if(request.method==='GET')return reply(200,'Versión cargada.',{sha:current.sha,content:JSON.parse(decode(current.content))});
+    if(request.method==='GET')return reply(200,'Versión cargada.',{sha:current.sha,content:validate(JSON.parse(decode(current.content)))});
     if(current.sha!==body.baseSha)return reply(409,'Alguien ha publicado otra versión. Exporta tu borrador y recarga antes de continuar.');
     const updated=await fetch(url,{method:'PUT',headers:{...headers,'content-type':'application/json'},body:JSON.stringify({message:'content: actualizar landing desde editor',content:encode(JSON.stringify(body.content,null,2)+'\n'),sha:current.sha,branch:BRANCH})});
     if(!updated.ok)return reply(updated.status===409?409:502,'No se pudo guardar. Conserva tu borrador y vuelve a cargar la versión publicada.');

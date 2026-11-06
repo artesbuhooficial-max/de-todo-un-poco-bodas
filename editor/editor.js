@@ -3,6 +3,25 @@ const STORAGE='artesbuho:dtup:draft:v1';
 let schema,content,published,baseSha=null,key='',dirty=false;
 const status=text=>{$('#status').textContent=text;};
 const clone=value=>structuredClone(value);
+function completeDraft(draft) {
+  if (draft?.siteId !== 'de-todo-un-poco' || draft.schemaVersion !== 1 ||
+      !draft.values || typeof draft.values !== 'object' || Array.isArray(draft.values)) return null;
+  const fields = new Map(schema.map(field => [field.key, field]));
+  if (Object.keys(draft.values).some(key => !fields.has(key))) return null;
+  const values = {};
+  for (const field of schema) {
+    const value = Object.hasOwn(draft.values, field.key) ? draft.values[field.key] : field.default;
+    if (typeof value !== 'string') return null;
+    values[field.key] = value;
+  }
+  return {...draft, values};
+}
+function sameContent(left, right) {
+  const first = completeDraft(left);
+  const second = completeDraft(right);
+  return first && second && schema.every(field => first.values[field.key] === second.values[field.key]);
+}
+
 const preview=()=>$('#preview').contentWindow.postMessage({source:'dtup-editor',values:content.values},location.origin);
 function save(){dirty=true;try{localStorage.setItem(STORAGE,JSON.stringify({content,baseSha}));status('Borrador guardado en este navegador. Aún no está publicado.');}catch{status('No hay espacio en este navegador. Descargad el borrador para conservarlo.');}preview();}
 function inspect(){
@@ -15,15 +34,36 @@ function inspect(){
 }
 async function api(method='GET',body){const response=await fetch('/api/publish',{method,headers:{'x-publish-key':key,...(body?{'content-type':'application/json'}:{})},...(body?{body:JSON.stringify(body)}:{})});const result=await response.json();if(!response.ok){if(response.status===401)key='';throw Error(result.message||'No se pudo conectar.');}return result;}
 function askKey(){if(key)return Promise.resolve(true);return new Promise(resolve=>{const dialog=$('#auth');$('#key').value='';dialog.showModal();$('#auth-form').onsubmit=event=>{event.preventDefault();key=$('#key').value.trim();dialog.close();resolve(Boolean(key));};$('#cancel-auth').onclick=()=>{dialog.close();resolve(false);};dialog.oncancel=()=>resolve(false);});}
-$('#publish').addEventListener('click',async()=>{if(!await askKey())return;$('#publish').disabled=true;try{if(!baseSha){const latest=await api();if(JSON.stringify(latest.content)!==JSON.stringify(published))throw Error('Hay una versión más reciente. Descargad el borrador y cargad la versión publicada antes de combinar los cambios.');baseSha=latest.sha;}const result=await api('POST',{content,baseSha});baseSha=result.sha;published=clone(content);dirty=false;localStorage.removeItem(STORAGE);status('Cambios guardados. Cloudflare está publicando la web; puede tardar unos minutos.');}catch(error){status(error.message);}finally{$('#publish').disabled=false;}});
+$('#publish').addEventListener('click',async()=>{if(!await askKey())return;$('#publish').disabled=true;try{if(!baseSha){const latest=await api();if(!sameContent(latest.content,published))throw Error('Hay una versión más reciente. Descargad el borrador y cargad la versión publicada antes de combinar los cambios.');baseSha=latest.sha;}const result=await api('POST',{content,baseSha});baseSha=result.sha;published=clone(content);dirty=false;localStorage.removeItem(STORAGE);status('Cambios guardados. Cloudflare está publicando la web; puede tardar unos minutos.');}catch(error){status(error.message);}finally{$('#publish').disabled=false;}});
 $('#export').addEventListener('click',()=>{const url=URL.createObjectURL(new Blob([JSON.stringify(content,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='de-todo-un-poco-borrador.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
-$('#import').addEventListener('change',async event=>{const file=event.target.files[0];if(!file)return;try{if(file.size>900000)throw Error('El borrador supera 900 KB.');const next=JSON.parse(await file.text());if(next.siteId!=='de-todo-un-poco'||next.schemaVersion!==1||schema.some(field=>typeof next.values?.[field.key]!=='string'))throw Error('Este borrador no corresponde a la web.');content=next;inspect();save();}catch(error){status(error.message);}event.target.value='';});
+$('#import').addEventListener('change',async event=>{const file=event.target.files[0];if(!file)return;try{if(file.size>900000)throw Error('El borrador supera 900 KB.');const next=completeDraft(JSON.parse(await file.text()));if(!next)throw Error('Este borrador no corresponde a la web.');content=next;inspect();save();}catch(error){status(error.message);}event.target.value='';});
 $('#restore').addEventListener('click',async()=>{if(!await askKey())return;$('#restore').disabled=true;try{const latest=await api();if(dirty){status('Descargad primero vuestro borrador. Después volved a pulsar este botón para cargar la versión publicada.');dirty=false;return;}content=clone(latest.content);published=clone(latest.content);baseSha=latest.sha;localStorage.removeItem(STORAGE);inspect();preview();status('Versión publicada cargada.');}catch(error){status(error.message);}finally{$('#restore').disabled=false;}});
 $('#field').addEventListener('change',inspect);
 for(const mode of ['desktop','mobile'])$('#'+mode).addEventListener('click',()=>{$('#preview').classList.toggle('mobile',mode==='mobile');$('#desktop').setAttribute('aria-pressed',String(mode==='desktop'));$('#mobile').setAttribute('aria-pressed',String(mode==='mobile'));});
 window.addEventListener('message',event=>{if(event.origin!==location.origin||event.source!==$('#preview').contentWindow)return;if(event.data?.source==='dtup-ready'&&content)preview();if(event.data?.source==='dtup-preview'&&schema?.some(field=>field.key===event.data.field)){$('#field').value=event.data.field;inspect();$('#value').focus();}});
 try{
  [schema,published]=await Promise.all([fetch('/editor-schema.json').then(r=>r.json()),fetch('/content.json',{cache:'no-store'}).then(r=>r.json())]);content=clone(published);
- try{const saved=JSON.parse(localStorage.getItem(STORAGE));if(saved?.content?.siteId==='de-todo-un-poco'&&schema.every(field=>typeof saved.content.values?.[field.key]==='string')){content=saved.content;baseSha=saved.baseSha;dirty=true;}}catch{}
- let group;for(const field of schema){if(!group||group.label!==field.group){group=document.createElement('optgroup');group.label=field.group;$('#field').append(group);}const option=document.createElement('option');option.value=field.key;option.textContent=field.label;group.append(option);}inspect();preview();status(dirty?'Borrador local recuperado. Aún no está publicado.':'Listo. Pulsad un texto o una imagen para empezar.');
+ try {
+  const saved = JSON.parse(localStorage.getItem(STORAGE));
+  const restored = completeDraft(saved?.content);
+  if (restored) { content = restored; baseSha = saved.baseSha; dirty = true; }
+ } catch {}
+ const groups = new Map();
+ for (const field of schema) {
+   const name = field.kind === 'image' ? 'Fotos y logotipos' : field.group;
+   if (!groups.has(name)) {
+     const group = document.createElement('optgroup');
+     group.label = name;
+     groups.set(name, group);
+   }
+   const option = document.createElement('option');
+   option.value = field.key;
+   option.textContent = field.label;
+   groups.get(name).append(option);
+ }
+ const photos = groups.get('Fotos y logotipos');
+ groups.delete('Fotos y logotipos');
+ $('#field').append(photos, ...groups.values());
+ $('#field').value = schema[0].key;
+ inspect();preview();status(dirty?'Borrador local recuperado. Aún no está publicado.':'Listo. Pulsad un texto o una imagen para empezar.');
 }catch{status('No se pudo cargar el contenido. Recargad la página para volver a intentarlo.');}

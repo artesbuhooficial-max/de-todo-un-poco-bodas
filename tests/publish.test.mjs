@@ -10,7 +10,7 @@ const sha='a'.repeat(40);
 const request=(body,key=env.PUBLISH_SECRET,origin='https://example.com')=>new Request('https://example.com/api/publish',{method:'POST',headers:{origin,'content-type':'application/json','x-publish-key':key},body:JSON.stringify(body)});
 
 test('approved content validates and rendering escapes text',()=>{
- assert.equal(validate(original),original);
+ assert.deepEqual(validate(original).values, {...Object.fromEntries(schema.filter(field => typeof field.default === 'string').map(field => [field.key, field.default])), ...original.values});
  const next=structuredClone(original),field=schema.find(f=>f.kind==='text');next.values[field.key]='<script>alert(1)</script>';
  assert.equal(render(`{{${field.key}}}`,next),'&lt;script&gt;alert(1)&lt;/script&gt;');
 });
@@ -33,6 +33,6 @@ test('detects concurrent updates and writes only the fixed content file',async()
   assert.equal(calls.filter(c=>c.options.method==='PUT').length,0);
   const response=await onRequest({request:request({content:original,baseSha:sha}),env});assert.equal(response.status,200);
   const update=calls.find(c=>c.options.method==='PUT');assert.equal(update.url,'https://api.github.com/repos/artesbuhooficial-max/de-todo-un-poco-bodas/contents/data/content.json');
-  const payload=JSON.parse(update.options.body);assert.equal(payload.sha,sha);assert.equal(payload.branch,'main');assert.deepEqual(JSON.parse(Buffer.from(payload.content,'base64').toString('utf8')),original);
+  const payload=JSON.parse(update.options.body);assert.equal(payload.sha,sha);assert.equal(payload.branch,'main');assert.deepEqual(JSON.parse(Buffer.from(payload.content,'base64').toString('utf8')),validate(original));
  }finally{globalThis.fetch=previous;}
 });

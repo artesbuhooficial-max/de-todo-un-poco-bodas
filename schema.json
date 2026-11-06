@@ -21,7 +21,7 @@
     "key": "campo_004",
     "kind": "image",
     "group": "General",
-    "label": "De Todo Un Poco"
+    "label": "Logotipo de cabecera"
   },
   {
     "key": "campo_005",
@@ -123,7 +123,7 @@
     "key": "campo_021",
     "kind": "image",
     "group": "Portada",
-    "label": "Marcos Cantador y Sergio Amaro juntos al atardecer"
+    "label": "Foto de portada"
   },
   {
     "key": "campo_022",
@@ -255,7 +255,7 @@
     "key": "campo_043",
     "kind": "image",
     "group": "Fotografía",
-    "label": "Marcos y Sergio conversan durante una sesión de fotos"
+    "label": "Foto de fondo en blanco y negro"
   },
   {
     "key": "campo_044",
@@ -279,7 +279,7 @@
     "key": "campo_047",
     "kind": "image",
     "group": "Quiénes somos",
-    "label": "Marcos y Sergio comparten un momento juntos"
+    "label": "Foto de Quiénes somos"
   },
   {
     "key": "campo_048",
@@ -513,7 +513,7 @@
     "key": "campo_086",
     "kind": "image",
     "group": "Pie de página",
-    "label": "De Todo Un Poco"
+    "label": "Logotipo del pie"
   },
   {
     "key": "campo_087",
@@ -550,5 +550,362 @@
     "kind": "phone",
     "group": "Pie de página",
     "label": "Teléfono de WhatsApp (prefijo incluido)"
+  },
+  {
+    "key": "campo_093",
+    "group": "Portada",
+    "label": "Sello · DE LA EMOCIÓN",
+    "kind": "text",
+    "default": "DE LA EMOCIÓN"
+  },
+  {
+    "key": "campo_094",
+    "group": "Portada",
+    "label": "Sello · AL",
+    "kind": "text",
+    "default": "AL"
+  },
+  {
+    "key": "campo_095",
+    "group": "Portada",
+    "label": "Sello · BAILE",
+    "kind": "text",
+    "default": "BAILE"
+  },
+  {
+    "key": "campo_096",
+    "group": "Portada",
+    "label": "Sello · Y OTRA VEZ",
+    "kind": "text",
+    "default": "Y OTRA VEZ"
+  },
+  {
+    "key": "campo_097",
+    "group": "Franja de texto",
+    "label": "PARA EL SÍ QUIERO",
+    "kind": "text",
+    "default": "PARA EL SÍ QUIERO"
+  },
+  {
+    "key": "campo_098",
+    "group": "Franja de texto",
+    "label": "PARA EL PRIMER BRINDIS",
+    "kind": "text",
+    "default": "PARA EL PRIMER BRINDIS"
+  },
+  {
+    "key": "campo_099",
+    "group": "Franja de texto",
+    "label": "PARA EL ÚLTIMO BAILE",
+    "kind": "text",
+    "default": "PARA EL ÚLTIMO BAILE"
+  },
+  {
+    "key": "campo_100",
+    "group": "Franja de texto",
+    "label": "PARA TODO LO QUE PASE ENTRE MEDIAS",
+    "kind": "text",
+    "default": "PARA TODO LO QUE PASE ENTRE MEDIAS"
+  },
+  {
+    "key": "campo_101",
+    "group": "Momentos",
+    "label": "Etiqueta de tarjeta 1",
+    "kind": "text",
+    "default": "CEREMONIA"
+  },
+  {
+    "key": "campo_102",
+    "group": "Momentos",
+    "label": "Número de tarjeta 1",
+    "kind": "text",
+    "default": "01"
+  },
+  {
+    "key": "campo_103",
+    "group": "Proceso",
+    "label": "Número de paso 1",
+    "kind": "text",
+    "default": "01"
+  },
+  {
+    "key": "campo_104",
+    "group": "Momentos",
+    "label": "Etiqueta de tarjeta 2",
+    "kind": "text",
+    "default": "CÓCTEL"
+  },
+  {
+    "key": "campo_105",
+    "group": "Momentos",
+    "label": "Número de tarjeta 2",
+    "kind": "text",
+    "default": "02"
+  },
+  {
+    "key": "campo_106",
+    "group": "Proceso",
+    "label": "Número de paso 2",
+    "kind": "text",
+    "default": "02"
+  },
+  {
+    "key": "campo_107",
+    "group": "Momentos",
+    "label": "Etiqueta de tarjeta 3",
+    "kind": "text",
+    "default": "CELEBRACIÓN"
+  },
+  {
+    "key": "campo_108",
+    "group": "Momentos",
+    "label": "Número de tarjeta 3",
+    "kind": "text",
+    "default": "03"
+  },
+  {
+    "key": "campo_109",
+    "group": "Proceso",
+    "label": "Número de paso 3",
+    "kind": "text",
+    "default": "03"
+  },
+  {
+    "key": "campo_110",
+    "group": "Fotografía",
+    "label": "Antetítulo sobre la foto",
+    "kind": "text",
+    "default": "DE TODO UN POCO"
+  },
+  {
+    "key": "campo_111",
+    "group": "Formulario",
+    "label": "Etiqueta · Vuestro nombre",
+    "kind": "text",
+    "default": "Vuestro nombre"
+  },
+  {
+    "key": "campo_112",
+    "group": "Formulario",
+    "label": "Etiqueta · Fecha de la boda",
+    "kind": "text",
+    "default": "Fecha de la boda"
+  },
+  {
+    "key": "campo_113",
+    "group": "Formulario",
+    "label": "Etiqueta · Lugar",
+    "kind": "text",
+    "default": "Lugar"
+  },
+  {
+    "key": "campo_114",
+    "group": "Formulario",
+    "label": "Etiqueta · ¿Qué momento queréis acompañar?",
+    "kind": "text",
+    "default": "¿Qué momento queréis acompañar?"
+  },
+  {
+    "key": "campo_115",
+    "group": "Formulario",
+    "label": "Etiqueta · Contadnos un poco más",
+    "kind": "text",
+    "default": "Contadnos un poco más"
+  },
+  {
+    "key": "campo_116",
+    "group": "Formulario",
+    "label": "Texto de ayuda · ¿Cómo os llamáis?",
+    "kind": "text",
+    "default": "¿Cómo os llamáis?"
+  },
+  {
+    "key": "campo_117",
+    "group": "Formulario",
+    "label": "Texto de ayuda · Ciudad o finca",
+    "kind": "text",
+    "default": "Ciudad o finca"
+  },
+  {
+    "key": "campo_118",
+    "group": "Formulario",
+    "label": "Texto de ayuda · Una canción, el ambiente, cuántas personas seréis… lo que os apetezca",
+    "kind": "text",
+    "default": "Una canción, el ambiente, cuántas personas seréis… lo que os apetezca"
+  },
+  {
+    "key": "campo_119",
+    "group": "Formulario",
+    "label": "Opción · Aún no lo tenemos claro",
+    "kind": "text",
+    "default": "Aún no lo tenemos claro"
+  },
+  {
+    "key": "campo_120",
+    "group": "Formulario",
+    "label": "Opción · Ceremonia",
+    "kind": "text",
+    "default": "Ceremonia"
+  },
+  {
+    "key": "campo_121",
+    "group": "Formulario",
+    "label": "Opción · Cóctel",
+    "kind": "text",
+    "default": "Cóctel"
+  },
+  {
+    "key": "campo_122",
+    "group": "Formulario",
+    "label": "Opción · Celebración",
+    "kind": "text",
+    "default": "Celebración"
+  },
+  {
+    "key": "campo_123",
+    "group": "Formulario",
+    "label": "Opción · Varios momentos",
+    "kind": "text",
+    "default": "Varios momentos"
+  },
+  {
+    "key": "campo_124",
+    "group": "Formulario",
+    "label": "Botón de WhatsApp",
+    "kind": "text",
+    "default": "Preparar mensaje en WhatsApp"
+  },
+  {
+    "key": "campo_125",
+    "group": "Formulario",
+    "label": "Nota junto al botón",
+    "kind": "text",
+    "default": "Al pulsar se abrirá WhatsApp con vuestro mensaje. Revisadlo y enviadlo desde allí a Marcos, nuestro contacto para eventos."
+  },
+  {
+    "key": "campo_126",
+    "group": "Pie de página",
+    "label": "Nombre en el pie",
+    "kind": "text",
+    "default": "De Todo Un Poco"
+  },
+  {
+    "key": "campo_127",
+    "group": "Pie de página",
+    "label": "Nombres en el pie",
+    "kind": "text",
+    "default": "Marcos Cantador · Sergio Amaro"
+  },
+  {
+    "key": "campo_128",
+    "group": "Navegación",
+    "label": "Destino · contenido",
+    "kind": "link",
+    "default": "#contenido"
+  },
+  {
+    "key": "campo_129",
+    "group": "Navegación",
+    "label": "Destino · inicio",
+    "kind": "link",
+    "default": "#inicio"
+  },
+  {
+    "key": "campo_130",
+    "group": "Navegación",
+    "label": "Destino · experiencia",
+    "kind": "link",
+    "default": "#experiencia"
+  },
+  {
+    "key": "campo_131",
+    "group": "Navegación",
+    "label": "Destino · nosotros",
+    "kind": "link",
+    "default": "#nosotros"
+  },
+  {
+    "key": "campo_132",
+    "group": "Navegación",
+    "label": "Destino · preguntas",
+    "kind": "link",
+    "default": "#preguntas"
+  },
+  {
+    "key": "campo_133",
+    "group": "Navegación",
+    "label": "Destino · contacto",
+    "kind": "link",
+    "default": "#contacto"
+  },
+  {
+    "key": "campo_134",
+    "group": "Navegación",
+    "label": "Destino · experiencia",
+    "kind": "link",
+    "default": "#experiencia"
+  },
+  {
+    "key": "campo_135",
+    "group": "Navegación",
+    "label": "Destino · nosotros",
+    "kind": "link",
+    "default": "#nosotros"
+  },
+  {
+    "key": "campo_136",
+    "group": "Navegación",
+    "label": "Destino · preguntas",
+    "kind": "link",
+    "default": "#preguntas"
+  },
+  {
+    "key": "campo_137",
+    "group": "Navegación",
+    "label": "Destino · contacto",
+    "kind": "link",
+    "default": "#contacto"
+  },
+  {
+    "key": "campo_138",
+    "group": "Navegación",
+    "label": "Destino · contacto",
+    "kind": "link",
+    "default": "#contacto"
+  },
+  {
+    "key": "campo_139",
+    "group": "Navegación",
+    "label": "Destino · experiencia",
+    "kind": "link",
+    "default": "#experiencia"
+  },
+  {
+    "key": "campo_140",
+    "group": "Navegación",
+    "label": "Destino · contacto",
+    "kind": "link",
+    "default": "#contacto"
+  },
+  {
+    "key": "campo_141",
+    "group": "Navegación",
+    "label": "Destino · contacto",
+    "kind": "link",
+    "default": "#contacto"
+  },
+  {
+    "key": "campo_142",
+    "group": "Navegación",
+    "label": "Destino · inicio",
+    "kind": "link",
+    "default": "#inicio"
+  },
+  {
+    "key": "campo_143",
+    "group": "Navegación",
+    "label": "Destino · contacto",
+    "kind": "link",
+    "default": "#contacto"
   }
 ]
