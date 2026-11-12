@@ -13,7 +13,7 @@ npm run build
 
 Cloudflare Pages: proyecto `de-todo-un-poco-bodas`, cuenta de Artes Búho. Repositorio `artesbuhooficial-max/de-todo-un-poco-bodas`, rama `main`. Comando `npm run build`, directorio `dist`. GitHub Actions valida cada commit de main e inicia la publicación mediante un deploy hook exclusivo, guardado como secreto `CLOUDFLARE_PAGES_DEPLOY_HOOK` en GitHub.
 
-La portada está en `/` y el editor en `/editor/`. Dominio confirmado por David: `detodounpocomusic.com`, con variante `www.detodounpocomusic.com`. La conexión DNS se activa después de confirmar la compra o el acceso al dominio.
+La portada está en `https://detodounpocomusica.com/` y el editor en `https://detodounpocomusica.com/editor/`. El proyecto Pages de la cuenta del dominio sirve el contenido del proyecto de Artes Búho.
 
 ## Contenidos
 
